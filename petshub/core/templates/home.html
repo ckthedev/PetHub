@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div id="bannerAd" class="google-ad">
+            <!-- Your Google banner ad code goes here -->
+            <!-- Make sure to replace this comment with your actual Google banner ad code -->
+        </div>
+        <h1>Find Your Dog</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Enter pet type...">
+            <button onclick="searchBreeds()" class="search-button">Search Breeds</button>
+        </div>
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+<script>
+    async function searchBreeds() {
+        const searchInput = document.getElementById('searchInput').value.trim();
+        const searchResultsDiv = document.getElementById('searchResults');
+        searchResultsDiv.innerHTML = ''; // Clear previous search results
+
+        if (!searchInput) {
+            searchResultsDiv.textContent = 'Please enter a dog breed.'; // Updated text for dogs
+            return;
+        }
+
+        try {
+            // Search for dog breeds
+            const dogResponse = await fetch(`https://api.thedogapi.com/v1/breeds/search?q=${searchInput}&api_key=live_dvuBjR4aiucAit5Ay7NmBFgnsp4tGjlGioEGoEFV7SiwmGgkJXt1tAAkiZVfBEIP`);
+            const dogData = await dogResponse.json();
+
+            // Display dog results if available
+            if (dogData && dogData.length > 0) {
+                const dogBreedId = dogData[0].id;
+                const dogImagesResponse = await fetch(`https://api.thedogapi.com/v1/images/search?limit=5&breed_ids=${dogBreedId}&api_key=live_dvuBjR4aiucAit5Ay7NmBFgnsp4tGjlGioEGoEFV7SiwmGgkJXt1tAAkiZVfBEIP`);
+                const dogImagesData = await dogImagesResponse.json();
+
+                if (dogImagesData && dogImagesData.length > 0) {
+                    dogImagesData.forEach(dog => {
+                        const dogDiv = document.createElement('div');
+                        const img = document.createElement('img');
+                        img.src = dog.url;
+                        img.alt = dog.breeds[0].name;
+                        img.classList.add('pet-image'); // Add a CSS class for styling
+                        dogDiv.appendChild(img);
+                        searchResultsDiv.appendChild(dogDiv);
+                    });
+                } else {
+                    searchResultsDiv.textContent = 'No images found for this dog breed.';
+                }
+
+                // Display dog information
+                const dogInfoDiv = document.createElement('div');
+                dogInfoDiv.classList.add('dog-info');
+                dogInfoDiv.innerHTML = `<h3>${dogData[0].name}</h3>
+                                         <p>Breed Group: ${dogData[0].breed_group}</p>
+                                         <p>Life Span: ${dogData[0].life_span}</p>
+                                         <p>Temperament: ${dogData[0].temperament}</p>
+                                         <p>Origin: ${dogData[0].origin}</p>`;
+                searchResultsDiv.appendChild(dogInfoDiv);
+            } else {
+                searchResultsDiv.textContent = 'No results found for the entered dog breed.';
+            }
+        } catch (error) {
+            console.error('Error fetching dog data:', error);
+            searchResultsDiv.textContent = 'Error fetching dog data. Please try again later.';
+        }
+    }
+</script>
+
+<style>
+    .pet-image {
+        width: 10cm; /* Adjust the width of the pet images as per your preference */
+        height: auto; /* Maintain aspect ratio */
+        margin: 10px; /* Add margin between images */
+    }
+
+    .dog-info {
+        margin-top: 20px; /* Add margin between images and dog information */
+    }
+
+    .google-ad {
+    /* Adjust the styles for your Google banner ad container */
+    margin-top: 20px; /* Add space between navbar and ad */
+}
+
+.search-container {
+    /* Adjust the styles to center the search container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Add space between ad and search container */
+}
+
+
+
+
+
+
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pets Hub</title>
+    <!-- Include CSS files here -->
+    <style>
+        body {
+            background-color: #2c3e50; /* Change background color to a darker shade */
+            color: #fff; /* Change text color to white */
+            font-family: monospace; /* Change font family */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        /* Styles for the top navbar */
+        .top-navbar {
+            font-family: monospace;
+            background-color: #3962af; 
+            color: #fff; /* Change text color to white */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-top-left-radius: 20px; /* Add curved corners to the top left */
+            border-top-right-radius: 20px; /* Add curved corners to the top right */
+        }
+
+        .top-navbar .logo {
+            font-size: 1rem; /* Increase font size of the logo */
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px; /* Add padding to the logo */
+            border: 2px solid #07c5ff; /* Add border to the logo */
+            border-radius: 20px; /* Add curved corners to the logo container */
+        }
+
+        .top-navbar ul {
+            list-style: none;
+            display: flex;
+            justify-content: center; /* Center-align the navbar links */
+            flex-grow: 1; /* Allow the links to expand and fill available space */
+        }
+
+        .top-navbar ul li {
+            margin-right: 20px;
+        }
+
+        .top-navbar ul li:first-child {
+            margin-left: 0;
+        }
+
+        .top-navbar ul li:last-child {
+            margin-right: 0; /* Remove margin from the last navbar item */
+        }
+
+        .top-navbar ul li a {
+            color: #fff;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase; /* Convert text to uppercase */
+            padding: 5px 15px; /* Add padding to the links */
+        }
+
+        .top-navbar .account-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 5px 15px;
+            margin-right: 20px; /* Add margin to separate the account link from other links */
+        }
+
+        .top-navbar ul li a:hover {
+            border-bottom: none; /* Remove underline on hover */
+            background-color: #000000; /* Change background color on hover */
+            border-radius: 10px; /* Add curved corners on hover */
+        }
+
+        /* Content Container */
+        .container {
+            text-align: center; /* Center-align the content */
+            margin-top: 20px; /* Add some top margin for spacing */
+            min-height: calc(100vh - 120px); /* Set minimum height for content */
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px; /* Add some top margin for spacing */
+        }
+
+        .search-input {
+            padding: 10px; /* Add padding to the input field */
+            border: 1px solid #ccc; /* Add a border */
+            border-radius: 5px; /* Add some border radius */
+            margin-right: 10px; /* Add right margin to the input */
+        }
+
+        .search-button {
+            padding: 10px 20px; /* Add padding to the button */
+            background-color: #07c5ff; /* Button background color */
+            color: #fff; /* Button text color */
+            border: none; /* Remove button border */
+            border-radius: 5px; /* Add border radius */
+            cursor: pointer; /* Show pointer cursor on hover */
+        }
+
+        .search-button:hover {
+            background-color: #059ac6; /* Change background color on hover */
+        }
+
+        /* Footer */
+        footer {
+    background-color: #222a31; /* Choose a background color for the footer */
+    color: #fff; /* Text color for the footer */
+    padding: 20px 0; /* Add padding to the footer */
+    font-size: 14px; /* Change the font size for the footer text */
+    font-family: monospace; /* Change the font family for the footer text */
+}
+
+        .container-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .left-section p {
+            margin: 0;
+        }
+
+        .right-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .right-section ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        .right-section ul li:last-child {
+            margin-right: 0;
+        }
+
+        .right-section ul li a {
+            text-decoration: none;
+            color: #fff; /* Text color for footer links */
+        }
+
+        /* Custom CSS for the blog page */
+.blog-post {
+    margin-bottom: 20px;
+}
+
+.post-link {
+    color: #333; /* Set the color of the links */
+    text-decoration: none; /* Remove underline from the links */
+}
+
+.post-link:hover {
+    color: #f5e5e5; /* Change link color on hover */
+}
+
+.read-more {
+    display: block;
+    margin-top: 10px;
+    color: #fcfdff; /* Set the color of the "Read More" link */
+    text-decoration: none; /* Remove underline from the "Read More" link */
+}
+
+.read-more:hover {
+    color: #f3f3f3; /* Change "Read More" link color on hover */
+}
+
+
+ 
+        
+    </style>
+</head>
+<body>
+    <!-- Top Navbar -->
+    <div class="top-navbar">
+        <a href="#" class="logo">PET SHUB</a>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'blog' %}">Blog</a></li>
+            <li><a href="{% url 'community' %}">Community</a></li>
+        </ul>
+        <a href="{% url 'account_options' %}" class="account-link">Account</a>
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+        <!-- Content from child templates will be included here -->
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container-footer">
+            <div class="left-section">
+                <p>&copy;2024 PetHub. All rights reserved.</p>
+            </div>
+            <div class="right-section">
+                <ul>
+                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a></li>
+                    <li><a href="{% url 'about_us' %}">About Us</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<!-- account_options.html -->
+{% extends 'base.html' %} <!-- Extend the base template -->
+
+{% block content %} <!-- Define a block for the content -->
+    <h2>Choose an Option</h2>
+    <ul>
+        <li><a href="{% url 'register' %}">Register</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+    </ul>
+{% endblock %} <!-- End of the content block -->
